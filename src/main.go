@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	basic.Case4()
+	basic.Example4()
 }

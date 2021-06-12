@@ -20,7 +20,7 @@ func Print(p *Person) {
 	fmt.Printf("Name=%s, Sexual=%s, Age=%d\n", p.Name, p.Sexual, p.Age)
 }
 
-func Case4() {
+func Example4() {
 	var p = Person{
 		Name:   "Kylo Yip",
 		Sexual: "Male",
@@ -56,7 +56,7 @@ func PrintStr(p Stringable) {
 	fmt.Println(p.ToString())
 }
 
-func Case5() {
+func Example5() {
 	// 使用 Stringable 接口，Country 和 City 分别实现其 ToString 方法。
 	// 用接口把业务类型 Country、City 和控制逻辑 Print() 解耦。
 	// 实现 Stringable 接口的结构，都可以传递到 PrintStr() 使用。
@@ -93,7 +93,7 @@ func (s *Square) Sides() int {
 //    panic("implement me")
 //}
 
-func Case6() {
+func Example6() {
 	// Go 语言的编译器没有严格检查一个结构是否实现了某接口所有的方法。
 	s := Square{len: 5}
 	fmt.Printf("%d\n", s.Sides())

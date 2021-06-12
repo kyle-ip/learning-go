@@ -19,7 +19,7 @@ type data struct {
 
 // ========== Slice 共享内存 ==========
 
-func Case1() {
+func Example1() {
 	// 创建一个长度和容量都是 5 的 Slice，对下标 3、4 的位置赋值。
 	a := make([]int, 5)
 	a[3] = 42
@@ -33,7 +33,7 @@ func Case1() {
 	// append 只有在 cap 不够用时，才会重新分配内存以扩大容量。
 }
 
-func Case2() {
+func Example2() {
 	path := []byte("AAAA/BBBBBBBBB")
 	sepIndex := bytes.IndexByte(path, '/')
 
@@ -58,7 +58,7 @@ func Case2() {
 
 // ========== 结构的深度比较 ==========
 
-func Case3() {
+func Example3() {
 	// 在复制一个对象时，它可以是内建数据类型、数组、结构体、Map。
 	// 比如在复制结构体时，如果需要比较两个结构体中的数据是否相同，就要使用深度比较（使用反射 reflect.DeepEqual()）。
 	v1 := data{}

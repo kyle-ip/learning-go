@@ -2,6 +2,14 @@ package basic
 
 // 无锁队列的实现          https://coolshell.cn/articles/8239.html
 // 无锁 Hashmap 实现      https://coolshell.cn/articles/9703.html
+// Effective Go         https://golang.org/doc/effective_go.html
+// Uber Go Style        https://github.com/uber-go/guide/blob/master/style.md
+// 50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs     http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/
+// Go Advice            https://github.com/cristaloleg/go-advice
+// Practical Go Benchmarks      https://www.instana.com/blog/practical-golang-benchmarks/
+// Benchmarks of Go serialization methods           https://github.com/alecthomas/go_serialization_benchmarks
+// Debugging performance issues in Go programs      https://github.com/golang/go/wiki/Performance
+// Go code refactoring: the 23x performance hunt    https://medium.com/@val_deleplace/go-code-refactoring-the-23x-performance-hunt-156746b522f7
 
 // Go 语言仍需要关心性能问题：
 // - 如果需要把数字转换成字符串，使用 strconv.Itoa() 比 fmt.Sprintf() 要快一倍左右。

@@ -1,6 +1,8 @@
 package basic
 
 // 由苹果的低级BUG想到的     https://coolshell.cn/articles/11112.html
+// Golang Error Handling lesson by Rob Pike     http://jxck.hatenablog.com/entry/golang-error-handling-lesson-by-rob-pike
+// Errors are values                            https://blog.golang.org/errors-are-values
 
 import (
 	"bytes"
@@ -17,7 +19,7 @@ import (
 // - Go 中的错误参数如果要忽略，需要用 _ 变量来显式地忽略；
 // - 因为返回的 error 是接口（其中只有一个方法 Error()，返回一个 string），所以可以扩展自定义的错误处理。
 
-func Case7() {
+func Example7() {
 	// 如果一个函数返回了多个不同类型的 error：
 	//if err != nil {
 	//    switch err.(type) {
@@ -48,7 +50,7 @@ func Close(c io.Closer) {
 	}
 }
 
-func Case8() {
+func Example8() {
 	r, err := Open("a")
 	if err != nil {
 		log.Fatalf("error opening 'a'\n")
@@ -73,7 +75,7 @@ type Point struct {
 	ElevationLoss int
 }
 
-func Case9(r io.Reader) (*Point, error) {
+func Example9(r io.Reader) (*Point, error) {
 	var p Point
 	var err error
 	// 使用 Closure 的方式把对每个字段的 if xxx != nil 抽出来定义一个函数 read。
@@ -163,7 +165,7 @@ func (p *User) Print() *User {
 	return p
 }
 
-func Case10() {
+func Example10() {
 	p := User{}
 	p.
 		ReadName().
@@ -198,7 +200,7 @@ func (e *authorizationError) Cause() error {
 
 // 或利用第三库 error：https://github.com/pkg/errors
 
-func Case11() {
+func Example11() {
 
 	////错误包装
 	//if err != nil {

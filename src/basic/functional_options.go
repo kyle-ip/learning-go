@@ -1,5 +1,7 @@
 package basic
 
+// Self referential functions and design    http://commandcenter.blogspot.com.au/2014/01/self-referential-functions-and-design.html
+
 import (
 	"crypto/tls"
 	"fmt"
@@ -106,7 +108,7 @@ func (sb *ServerBuilder) Build() (Server, error) {
 	return sb.Server, nil
 }
 
-func Case13() {
+func Example13() {
 	sb := ServerBuilder{}
 	server, _ := sb.Create("127.0.0.1", 8080).
 		WithProtocol("udp").
@@ -170,7 +172,7 @@ func NewServerFP(addr string, port int, options ...Option) (*Server, error) {
 	return &srv, nil
 }
 
-func case14() {
+func Example14() {
 	s1, _ := NewServerFP("localhost", 1024)
 	s2, _ := NewServerFP("localhost", 2048, Protocol("udp"))
 	s3, _ := NewServerFP("0.0.0.0", 8080, Timeout(300*time.Second), MaxConns(1000))
