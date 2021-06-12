@@ -1,9 +1,9 @@
 package main
 
 import (
-	"basic"
+	"best_practise"
 )
 
 func main() {
-	basic.Example4()
+	best_practise.Example4()
 }
