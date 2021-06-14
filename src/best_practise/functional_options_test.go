@@ -5,6 +5,7 @@ package best_practise
 import (
 	"crypto/tls"
 	"fmt"
+	"testing"
 	"time"
 )
 
@@ -108,7 +109,7 @@ func (sb *ServerBuilder) Build() (Server, error) {
 	return sb.Server, nil
 }
 
-func Example13() {
+func Test13(t *testing.T) {
 	sb := ServerBuilder{}
 	server, _ := sb.Create("127.0.0.1", 8080).
 		WithProtocol("udp").
@@ -172,7 +173,7 @@ func NewServerFP(addr string, port int, options ...Option) (*Server, error) {
 	return &srv, nil
 }
 
-func Example14() {
+func Test14(t *testing.T) {
 	s1, _ := NewServerFP("localhost", 1024)
 	s2, _ := NewServerFP("localhost", 2048, Protocol("udp"))
 	s3, _ := NewServerFP("0.0.0.0", 8080, Timeout(300*time.Second), MaxConns(1000))

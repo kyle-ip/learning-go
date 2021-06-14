@@ -2,6 +2,7 @@ package best_practise
 
 import (
 	"fmt"
+	"testing"
 )
 
 // IOC/DIP 其实是一种管理思想        https://coolshell.cn/articles/9949.html
@@ -27,7 +28,7 @@ type ListBox struct {
 	Index  int      // Aggregation
 }
 
-func Example15() {
+func Test15(t *testing.T) {
 	label := Label{Widget{10, 10}, "State: "}
 	label.X = 11
 	label.Y = 12
@@ -74,8 +75,7 @@ func NewButton(X, Y int, Text string) Button {
 	return Button{Label{Widget{X, Y}, Text}}
 }
 
-func Example16() {
-
+func Test16(t *testing.T) {
 	button1 := Button{Label{Widget{10, 70}, "OK"}}
 	button2 := NewButton(50, 70, "Cancel")
 	listBox := ListBox{Widget{10, 40}, []string{"AL", "AK", "AZ", "AR"}, 0}

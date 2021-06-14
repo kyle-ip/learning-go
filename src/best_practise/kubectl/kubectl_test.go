@@ -1,6 +1,9 @@
 package kubectl
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 // https://github.com/kubernauts/practical-kubernetes-problems/blob/master/images/k8s-resources-map.png
 // https://github.com/kubernetes/kubernetes/blob/cea1d4e20b4a7886d8ff65f34c6d4f95efcb4742/staging/src/k8s.io/cli-runtime/pkg/resource/visitor.go
@@ -82,7 +85,7 @@ func (v LogVisitor) Visit(fn VisitorFunc) error {
 	})
 }
 
-func Example31() {
+func TestExample31(t *testing.T) {
 	info := Info{}
 	var v Visitor = &info
 	v = LogVisitor{v}

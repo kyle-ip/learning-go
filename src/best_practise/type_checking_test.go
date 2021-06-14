@@ -3,6 +3,7 @@ package best_practise
 import (
 	"fmt"
 	"reflect"
+	"testing"
 )
 
 // 类型检查：Type Assert 和 Reflection。
@@ -24,7 +25,7 @@ func (c *Container) Get() interface{} {
 	return elem
 }
 
-func Example22() {
+func Test22(t *testing.T) {
 	intContainer := &Container{}
 	intContainer.Put(7)
 	intContainer.Put(42)
@@ -72,7 +73,7 @@ func (c *ReflectContainer) Get(refval interface{}) error {
 	return nil
 }
 
-func Example23() {
+func Test23(t *testing.T) {
 	f1 := 3.1415926
 	f2 := 1.41421356237
 

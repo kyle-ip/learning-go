@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"testing"
 )
 
 // ========== 返回值检查 ==========
@@ -19,7 +20,7 @@ import (
 // - Go 中的错误参数如果要忽略，需要用 _ 变量来显式地忽略；
 // - 因为返回的 error 是接口（其中只有一个方法 Error()，返回一个 string），所以可以扩展自定义的错误处理。
 
-func Example7() {
+func Test7(t *testing.T) {
 	// 如果一个函数返回了多个不同类型的 error：
 	//if err != nil {
 	//    switch err.(type) {
@@ -50,7 +51,7 @@ func Close(c io.Closer) {
 	}
 }
 
-func Example8() {
+func Test8(t *testing.T) {
 	r, err := Open("a")
 	if err != nil {
 		log.Fatalf("error opening 'a'\n")
@@ -75,7 +76,7 @@ type Point struct {
 	ElevationLoss int
 }
 
-func Example9(r io.Reader) (*Point, error) {
+func Test9(r io.Reader) (*Point, error) {
 	var p Point
 	var err error
 	// 使用 Closure 的方式把对每个字段的 if xxx != nil 抽出来定义一个函数 read。
@@ -165,7 +166,7 @@ func (p *User) Print() *User {
 	return p
 }
 
-func Example10() {
+func Test10(t *testing.T) {
 	p := User{}
 	p.
 		ReadName().
@@ -200,7 +201,7 @@ func (e *authorizationError) Cause() error {
 
 // 或利用第三方库 error：https://github.com/pkg/errors
 
-func Example11() {
+func Test11(t *testing.T) {
 
 	////错误包装
 	//if err != nil {
