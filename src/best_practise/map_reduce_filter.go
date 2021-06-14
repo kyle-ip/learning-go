@@ -95,7 +95,7 @@ type Employee struct {
 }
 
 var list = []Employee{
-	{"Kyko", 26, 0, 8000},
+	{"Kylo", 26, 0, 8000},
 	{"Bob", 34, 10, 5000},
 	{"Alice", 23, 5, 9000},
 	{"Jack", 26, 0, 4000},

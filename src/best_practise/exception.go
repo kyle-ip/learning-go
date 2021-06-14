@@ -1,6 +1,6 @@
 package best_practise
 
-// 由苹果的低级BUG想到的     https://coolshell.cn/articles/11112.html
+// 由苹果的低级 BUG 想到的     https://coolshell.cn/articles/11112.html
 // Golang Error Handling lesson by Rob Pike     http://jxck.hatenablog.com/entry/golang-error-handling-lesson-by-rob-pike
 // Errors are values                            https://blog.golang.org/errors-are-values
 
@@ -198,7 +198,7 @@ func (e *authorizationError) Cause() error {
 	return e.err
 }
 
-// 或利用第三库 error：https://github.com/pkg/errors
+// 或利用第三方库 error：https://github.com/pkg/errors
 
 func Example11() {
 

@@ -98,3 +98,21 @@ func Example6() {
 	s := Square{len: 5}
 	fmt.Printf("%d\n", s.Sides())
 }
+
+// ========== 接口设计建议 ==========
+
+// 倾向于使⽤⼩的接⼝定义，很多接口只包含⼀个⽅法
+// type Reader interface {
+//     Read(p []byte) (n int, err error)
+// }
+
+// 较⼤的接⼝定义，可以由多个⼩接口定义组合⽽成
+// type ReadWriter interface {
+//     Reader
+//     Writer
+// }
+
+// 只依赖于必要功能的最⼩接⼝
+// func StoreData(reader Reader) error {
+//     // ...
+// }
