@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"testing"
 )
 
 // ========== 泛型的 Map Reduce ==========
@@ -25,7 +26,7 @@ func Map(data interface{}, fn interface{}) []interface{} {
 	return result
 }
 
-func Example21() {
+func Test21(t *testing.T) {
 	// 由于是泛型，Map 可以接收不同类型参数的 data 和 func。
 
 	square := func(x int) int {

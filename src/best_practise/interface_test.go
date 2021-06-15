@@ -1,6 +1,9 @@
 package best_practise
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 // ========== 使用成员方法封装 ==========
 
@@ -20,7 +23,7 @@ func Print(p *Person) {
 	fmt.Printf("Name=%s, Sexual=%s, Age=%d\n", p.Name, p.Sexual, p.Age)
 }
 
-func Example4() {
+func Test4(t *testing.T) {
 	var p = Person{
 		Name:   "Kylo Yip",
 		Sexual: "Male",
@@ -56,7 +59,7 @@ func PrintStr(p Stringable) {
 	fmt.Println(p.ToString())
 }
 
-func Example5() {
+func Test5(t *testing.T) {
 	// 使用 Stringable 接口，Country 和 City 分别实现其 ToString 方法。
 	// 用接口把业务类型 Country、City 和控制逻辑 Print() 解耦。
 	// 实现 Stringable 接口的结构，都可以传递到 PrintStr() 使用。
@@ -93,8 +96,26 @@ func (s *Square) Sides() int {
 //     panic("implement me")
 // }
 
-func Example6() {
+func Test6(t *testing.T) {
 	// Go 语言的编译器没有严格检查一个结构是否实现了某接口所有的方法。
 	s := Square{len: 5}
 	fmt.Printf("%d\n", s.Sides())
 }
+
+// ========== 接口设计建议 ==========
+
+// 倾向于使⽤⼩的接⼝定义，很多接口只包含⼀个⽅法
+// type Reader interface {
+//     Read(p []byte) (n int, err error)
+// }
+
+// 较⼤的接⼝定义，可以由多个⼩接口定义组合⽽成
+// type ReadWriter interface {
+//     Reader
+//     Writer
+// }
+
+// 只依赖于必要功能的最⼩接⼝
+// func StoreData(reader Reader) error {
+//     // ...
+// }

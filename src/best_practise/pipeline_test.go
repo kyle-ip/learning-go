@@ -10,6 +10,7 @@ import (
 	"math"
 	"net/http"
 	"sync"
+	"testing"
 )
 
 type PipelineHttpHandlerDecorator func(http.HandlerFunc) http.HandlerFunc
@@ -89,7 +90,7 @@ func pipeline(nums []int, echo EchoFunc, pipeFns ...PipeFunc) <-chan int {
 	return ch
 }
 
-func Example28() {
+func Test28(t *testing.T) {
 	// 效果：echo $nums | square | sum
 	var nums1 = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	for n := range sum(square(odd(echo(nums1)))) {
@@ -155,7 +156,7 @@ func merge(cs []<-chan int) <-chan int {
 	return out
 }
 
-func Example29() {
+func Test29(t *testing.T) {
 	// 构造数组 [1, 10000]。
 	nums := makeRange(1, 10000)
 

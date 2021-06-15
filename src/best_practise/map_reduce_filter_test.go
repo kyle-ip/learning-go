@@ -3,6 +3,7 @@ package best_practise
 import (
 	"fmt"
 	"strings"
+	"testing"
 )
 
 // ========== Map ==========
@@ -24,7 +25,7 @@ func MapStrToInt(arr []string, fn func(s string) int) []int {
 	return newArray
 }
 
-func Example17() {
+func Test17(t *testing.T) {
 
 	var list = []string{"Kylo", "Yip", ""}
 
@@ -51,7 +52,7 @@ func Reduce(arr []string, fn func(s string) int) int {
 	return sum
 }
 
-func Example18() {
+func Test18(t *testing.T) {
 	var list = []string{"Kylo", "Yip", ""}
 	x := Reduce(list, func(s string) int {
 		return len(s)
@@ -72,7 +73,7 @@ func Filter(arr []int, fn func(n int) bool) []int {
 	return newArray
 }
 
-func Example19() {
+func Test19(t *testing.T) {
 	var intset = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	out := Filter(intset, func(n int) bool {
 		return n%2 == 1
@@ -95,7 +96,7 @@ type Employee struct {
 }
 
 var list = []Employee{
-	{"Kyko", 26, 0, 8000},
+	{"Kylo", 26, 0, 8000},
 	{"Bob", 34, 10, 5000},
 	{"Alice", 23, 5, 9000},
 	{"Jack", 26, 0, 4000},
@@ -132,7 +133,7 @@ func EmployeeSumIf(list []Employee, fn func(e *Employee) int) int {
 	return sum
 }
 
-func Example20() {
+func Test20(t *testing.T) {
 
 	// 统计有多少员工大于 40 岁
 	old := EmployeeCountIf(list, func(e *Employee) bool {
