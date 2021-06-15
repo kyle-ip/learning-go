@@ -1,8 +1,8 @@
 package best_practise
 
-// 由苹果的低级BUG想到的     https://coolshell.cn/articles/11112.html
-// Golang Error Handling lesson by Rob Pike     http://jxck.hatenablog.com/entry/golang-error-handling-lesson-by-rob-pike
-// Errors are values                            https://blog.golang.org/errors-are-values
+// [由苹果的低级BUG想到的](https://coolshell.cn/articles/11112.html)
+// [Golang Error Handling lesson by Rob Pike](http://jxck.hatenablog.com/entry/golang-error-handling-lesson-by-rob-pike)
+// [Errors are values](https://blog.golang.org/errors-are-values)
 
 import (
 	"bytes"
