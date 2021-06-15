@@ -1,4 +1,4 @@
-package best_practise
+package decorator
 
 // Python 装饰器的函数式编程     https://coolshell.cn/articles/11265.html
 // 函数式编程                  https://coolshell.cn/articles/10822.html

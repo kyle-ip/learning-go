@@ -1,4 +1,4 @@
-package best_practise
+package functional_options
 
 // Self referential functions and design    http://commandcenter.blogspot.com.au/2014/01/self-referential-functions-and-design.html
 

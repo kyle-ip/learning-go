@@ -1,4 +1,4 @@
-package best_practise
+package generics
 
 // Go 泛型在 1.18 落地前只能用 interface{} + reflect 来完成。
 // interface{} 可以理解为 C 中的 void*、Java 中的 Object ，reflect 是 Go 的反射机制包，作用是在运行时检查类型。

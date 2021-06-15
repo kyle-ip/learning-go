@@ -1,4 +1,4 @@
-package best_practise
+package performance
 
 // [无锁队列的实现](https://coolshell.cn/articles/8239.html)
 // [无锁 Hashmap 实现](https://coolshell.cn/articles/9703.html)

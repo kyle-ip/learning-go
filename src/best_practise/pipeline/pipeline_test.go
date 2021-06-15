@@ -1,4 +1,4 @@
-package best_practise
+package pipeline
 
 // Go Concurrency Patterns: Pipelines and cancellation      https://blog.golang.org/pipelines
 // https://www.youtube.com/watch?v=f6kdp27TYZs
@@ -12,6 +12,8 @@ import (
     "sync"
     "testing"
 )
+
+type HttpHandlerDecorator func(http.HandlerFunc) http.HandlerFunc
 
 type PipelineHttpHandlerDecorator func(http.HandlerFunc) http.HandlerFunc
 

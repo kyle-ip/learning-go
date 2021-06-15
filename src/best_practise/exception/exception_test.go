@@ -1,4 +1,4 @@
-package best_practise
+package exception
 
 // 由苹果的低级 BUG 想到的     https://coolshell.cn/articles/11112.html
 // Golang Error Handling lesson by Rob Pike     http://jxck.hatenablog.com/entry/golang-error-handling-lesson-by-rob-pike
@@ -76,7 +76,7 @@ type Point struct {
     ElevationLoss int
 }
 
-func Test9(r io.Reader) (*Point, error) {
+func Read(r io.Reader) (*Point, error) {
     var p Point
     var err error
     // 使用 Closure 的方式把对每个字段的 if xxx != nil 抽出来定义一个函数 read。
@@ -98,6 +98,9 @@ func Test9(r io.Reader) (*Point, error) {
     }
 
     return &p, nil
+}
+
+func Test9(t *testing.T) {
 }
 
 type Reader struct {

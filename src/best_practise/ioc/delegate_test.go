@@ -1,4 +1,4 @@
-package best_practise
+package ioc
 
 import (
     "fmt"

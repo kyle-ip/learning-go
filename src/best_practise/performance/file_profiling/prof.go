@@ -41,7 +41,7 @@ func main() {
     }
 
     // 获取系统信息
-    if err := pprof.StartCPUProfile(f); err != nil { //监控cpu
+    if err := pprof.StartCPUProfile(f); err != nil { // 监控cpu
         log.Fatal("could not start CPU profile: ", err)
     }
     defer pprof.StopCPUProfile()
@@ -73,3 +73,11 @@ func main() {
     }
     f2.Close()
 }
+
+// go build prof.go
+// ./prof
+// go tool pprof prof cpu.prof
+//     top
+//     list fillMatrix
+//     svg
+//

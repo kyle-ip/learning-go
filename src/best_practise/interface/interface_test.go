@@ -1,4 +1,4 @@
-package best_practise
+package _interface
 
 import (
     "fmt"
