@@ -5,7 +5,7 @@ import (
     "testing"
 )
 
-// IOC/DIP 其实是一种管理思想        https://coolshell.cn/articles/9949.html
+// [IOC/DIP 其实是一种管理思想](https://coolshell.cn/articles/9949.html)
 
 // ========== 结构体嵌入 ==========
 
@@ -28,7 +28,7 @@ type ListBox struct {
     Index  int      // Aggregation
 }
 
-func Test15(t *testing.T) {
+func TestStructEmbedding(t *testing.T) {
     label := Label{Widget{10, 10}, "State: "}
     label.X = 11
     label.Y = 12
@@ -37,7 +37,7 @@ func Test15(t *testing.T) {
 // ========== 方法重写 ==========
 
 // 两个接口：Painter 画出组件；Clicker 表明点击事件。
-// 对于 Lable 而言只有 Painter 没有 Clicker；对于 Button 和 ListBox 而言 Painter 和 Clicker 都有。
+// 对于 Label 而言只有 Painter 没有 Clicker；对于 Button 和 ListBox 而言 Painter 和 Clicker 都有。
 
 type Painter interface {
     Paint()
@@ -75,7 +75,7 @@ func NewButton(X, Y int, Text string) Button {
     return Button{Label{Widget{X, Y}, Text}}
 }
 
-func Test16(t *testing.T) {
+func TestEmbeddingPolymorphic(t *testing.T) {
     button1 := Button{Label{Widget{10, 70}, "OK"}}
     button2 := NewButton(50, 70, "Cancel")
     listBox := ListBox{Widget{10, 40}, []string{"AL", "AK", "AZ", "AR"}, 0}

@@ -1,8 +1,8 @@
 package exception
 
-// 由苹果的低级 BUG 想到的     https://coolshell.cn/articles/11112.html
-// Golang Error Handling lesson by Rob Pike     http://jxck.hatenablog.com/entry/golang-error-handling-lesson-by-rob-pike
-// Errors are values                            https://blog.golang.org/errors-are-values
+// [由苹果的低级 BUG 想到的](https://coolshell.cn/articles/11112.html)
+// [Golang Error Handling lesson by Rob Pike](http://jxck.hatenablog.com/entry/golang-error-handling-lesson-by-rob-pike)
+// [Errors are values](https://blog.golang.org/errors-are-values)
 
 import (
     "bytes"
@@ -20,22 +20,20 @@ import (
 // - Go 中的错误参数如果要忽略，需要用 _ 变量来显式地忽略；
 // - 因为返回的 error 是接口（其中只有一个方法 Error()，返回一个 string），所以可以扩展自定义的错误处理。
 
-func Test7(t *testing.T) {
-    // 如果一个函数返回了多个不同类型的 error：
-    //if err != nil {
-    //    switch err.(type) {
-    //    case *json.SyntaxError:
-    //        ...
-    //    case *ZeroDivisionError:
-    //        ...
-    //    case *NullPointerError:
-    //        ...
-    //    default:
-    //        ...
-    //    }
-    //}
-    // 因此错误处理的方式本质上是返回值检查，也兼顾了异常的一些好处：对错误的扩展。
-}
+// 如果一个函数返回了多个不同类型的 error：
+// if err != nil {
+//     switch err.(type) {
+//     case *json.SyntaxError:
+//         ...
+//     case *ZeroDivisionError:
+//         ...
+//     case *NullPointerError:
+//         ...
+//     default:
+//         ...
+//     }
+// }
+// 因此错误处理的方式本质上是返回值检查，也兼顾了异常的一些好处：对错误的扩展。
 
 // ========== 资源清理 ==========
 // Go 使用 defer 关键词进行资源清理（类似 Java 的 finally）。
@@ -51,18 +49,24 @@ func Close(c io.Closer) {
     }
 }
 
-func Test8(t *testing.T) {
+func TestDefer(t *testing.T) {
     r, err := Open("a")
     if err != nil {
         log.Fatalf("error opening 'a'\n")
     }
-    defer Close(r) // 使用 defer 关键字在函数退出时关闭文件。
+    defer func() {
+        Close(r)
+        fmt.Println("close a")
+    }()
 
     r, err = Open("b")
     if err != nil {
         log.Fatalf("error opening 'b'\n")
     }
-    defer Close(r) // 使用 defer 关键字在函数退出时关闭文件。
+    defer func() {
+        Close(r)
+        fmt.Println("close b")
+    }()
 }
 
 // ========== 函数式编程 ==========
@@ -98,9 +102,6 @@ func Read(r io.Reader) (*Point, error) {
     }
 
     return &p, nil
-}
-
-func Test9(t *testing.T) {
 }
 
 type Reader struct {
@@ -206,14 +207,14 @@ func (e *authorizationError) Cause() error {
 
 func Test11(t *testing.T) {
 
-    ////错误包装
-    //if err != nil {
-    //	return errors.Wrap(err, "read failed")
-    //}
-    //
-    //// Cause接口
-    //switch err := errors.Cause(err).(type) {
-    //    case *MyError:
-    //    default:
-    //}
+    // 错误包装
+    // if err != nil {
+    //     return errors.Wrap(err, "read failed")
+    // }
+
+    // Cause 接口
+    // switch err := errors.Cause(err).(type) {
+    //     case *MyError:
+    //     default:
+    // }
 }

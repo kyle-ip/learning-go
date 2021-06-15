@@ -30,7 +30,7 @@ func Test22(t *testing.T) {
     intContainer.Put(7)
     intContainer.Put(42)
 
-    // 因为类型是 interface{} ，所以，你还要做一个转型，只有转型成功，才能进行后续操作
+    // 因为类型是 interface{} ，所以还要做转型，只有转型成功，才能进行后续操作
     // assert that the actual type is int
     elem, ok := intContainer.Get().(int)
     if !ok {
