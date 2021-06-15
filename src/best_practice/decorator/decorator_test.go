@@ -30,7 +30,7 @@ func Hello(s string) {
     fmt.Println(s)
 }
 
-func Test24(t *testing.T) {
+func TestDecorator(t *testing.T) {
     hello := decorator(Hello)
     hello("Hello")
     // decorator(Hello)("Hello, World!")
@@ -73,7 +73,7 @@ func Sum2(start, end int64) int64 {
     return (end - start + 1) * (end + start) / 2
 }
 
-func Test25(t *testing.T) {
+func TestTimeSum(t *testing.T) {
     // 封装时间统计的 decorator。
     sum1 := timedSumFunc(Sum1)
     sum2 := timedSumFunc(Sum2)
@@ -95,7 +95,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hello, World! "+r.URL.Path)
 }
 
-func Test26(t *testing.T) {
+func TestServerHeader(t *testing.T) {
     http.HandleFunc("/v1/hello", WithServerHeader(hello))
     err := http.ListenAndServe(":8080", nil)
     if err != nil {
@@ -144,7 +144,7 @@ func bar(a, b string) string {
     return a + b
 }
 
-func Test27(t *testing.T) {
+func TestGenericsDecorator(t *testing.T) {
     mybar := bar
     err := Decorator(&mybar, bar)
     if err != nil {

@@ -25,7 +25,7 @@ func MapStrToInt(arr []string, fn func(s string) int) []int {
     return newArray
 }
 
-func Test17(t *testing.T) {
+func TestMap(t *testing.T) {
 
     var list = []string{"Kylo", "Yip", ""}
 
@@ -52,7 +52,7 @@ func Reduce(arr []string, fn func(s string) int) int {
     return sum
 }
 
-func Test18(t *testing.T) {
+func TestReduce(t *testing.T) {
     var list = []string{"Kylo", "Yip", ""}
     x := Reduce(list, func(s string) int {
         return len(s)
@@ -73,14 +73,14 @@ func Filter(arr []int, fn func(n int) bool) []int {
     return newArray
 }
 
-func Test19(t *testing.T) {
-    var intset = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-    out := Filter(intset, func(n int) bool {
+func TestFilter(t *testing.T) {
+    var intSet = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+    out := Filter(intSet, func(n int) bool {
         return n%2 == 1
     })
     fmt.Printf("%v\n", out)
 
-    out = Filter(intset, func(n int) bool {
+    out = Filter(intSet, func(n int) bool {
         return n > 5
     })
     fmt.Printf("%v\n", out)
@@ -133,7 +133,7 @@ func EmployeeSumIf(list []Employee, fn func(e *Employee) int) int {
     return sum
 }
 
-func Test20(t *testing.T) {
+func TestMapReduceFilter(t *testing.T) {
 
     // 统计有多少员工大于 40 岁
     old := EmployeeCountIf(list, func(e *Employee) bool {

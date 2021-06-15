@@ -49,9 +49,9 @@ type Server2 struct {
 
 type OptionalConfig struct {
     Protocol string
-    Timeout time.Duration
-    MaxConn int
-    TLS     *tls.Config
+    Timeout  time.Duration
+    MaxConn  int
+    TLS      *tls.Config
 }
 
 func NewServer(addr string, port int, conf *OptionalConfig) (*Server2, error) {

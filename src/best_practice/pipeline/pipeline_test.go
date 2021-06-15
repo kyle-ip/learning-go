@@ -1,9 +1,9 @@
 package pipeline
 
-// Go Concurrency Patterns: Pipelines and cancellation      https://blog.golang.org/pipelines
-// https://www.youtube.com/watch?v=f6kdp27TYZs
-// https://blog.golang.org/advanced-go-concurrency-patterns
-// https://swtch.com/~rsc/thread/squint.pdf
+// [Go Concurrency Patterns: Pipelines and cancellation](https://blog.golang.org/pipelines)
+// [Google I/O 2012 - Go Concurrency Patterns](https://www.youtube.com/watch?v=f6kdp27TYZs)
+// [Advanced Go Concurrency Patterns](https://blog.golang.org/advanced-go-concurrency-patterns)
+// [Squinting at Power Series](https://swtch.com/~rsc/thread/squint.pdf)
 
 import (
     "fmt"
@@ -92,7 +92,7 @@ func pipeline(nums []int, echo EchoFunc, pipeFns ...PipeFunc) <-chan int {
     return ch
 }
 
-func Test28(t *testing.T) {
+func TestChannelForward(t *testing.T) {
     // 效果：echo $nums | square | sum
     var nums1 = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
     for n := range sum(square(odd(echo(nums1)))) {
@@ -158,11 +158,11 @@ func merge(cs []<-chan int) <-chan int {
     return out
 }
 
-func Test29(t *testing.T) {
+func TestFanInFanOut(t *testing.T) {
     // 构造数组 [1, 10000]。
     nums := makeRange(1, 10000)
 
-    // fan in: 把数组 echo 到一个 Channel in 中。
+    // fan out: 把数组 echo 到一个 Channel in 中。
     in := echo(nums)
 
     // 生成 5 个 Channel，都调用 sum(prime(in)) ，于是每个 Sum 的 Goroutine 都会开始计算和；
@@ -173,7 +173,7 @@ func Test29(t *testing.T) {
         chans[i] = sum(prime(in))
     }
 
-    // fan out: 最后再把所有的结果再求和拼起来得到最终的结果。
+    // fan in: 最后再把所有的结果再求和拼起来得到最终的结果。
     for n := range sum(merge(chans[:])) {
         fmt.Println(n)
     }
