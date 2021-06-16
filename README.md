@@ -8,7 +8,7 @@ My Golang study notes, include but are not limited to the following contents:
 
 - Best Practice on Engineering.
 
-- Quick Note and Cheat Sheet.
+- Development guide.
 
 - Some personal ideas.
 
