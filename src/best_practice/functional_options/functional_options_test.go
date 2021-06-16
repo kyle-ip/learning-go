@@ -170,7 +170,7 @@ func NewServerFP(addr string, port int, options ...Option) (*Server, error) {
     return &srv, nil
 }
 
-func Test14(t *testing.T) {
+func TestFunctionalOptions(t *testing.T) {
     s1, _ := NewServerFP("localhost", 1024)
     s2, _ := NewServerFP("localhost", 2048, Protocol("udp"))
     s3, _ := NewServerFP("0.0.0.0", 8080, Timeout(300*time.Second), MaxConn(1000))

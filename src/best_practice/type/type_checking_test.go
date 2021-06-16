@@ -25,7 +25,7 @@ func (c *Container) Get() interface{} {
     return elem
 }
 
-func Test22(t *testing.T) {
+func TestTypeAssert(t *testing.T) {
     intContainer := &Container{}
     intContainer.Put(7)
     intContainer.Put(42)
@@ -73,7 +73,7 @@ func (c *ReflectContainer) Get(refval interface{}) error {
     return nil
 }
 
-func Test23(t *testing.T) {
+func TestTypeCheckByReflection(t *testing.T) {
     f1 := 3.1415926
     f2 := 1.41421356237
 

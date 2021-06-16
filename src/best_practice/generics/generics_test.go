@@ -26,7 +26,7 @@ func Map(data interface{}, fn interface{}) []interface{} {
     return result
 }
 
-func Test21(t *testing.T) {
+func TestGenerics(t *testing.T) {
     // 由于是泛型，Map 可以接收不同类型参数的 data 和 func。
 
     square := func(x int) int {

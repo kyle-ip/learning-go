@@ -170,7 +170,7 @@ func (p *User) Print() *User {
     return p
 }
 
-func Test10(t *testing.T) {
+func TestFluentInterface(t *testing.T) {
     p := User{}
     p.
         ReadName().
@@ -204,8 +204,7 @@ func (e *authorizationError) Cause() error {
 }
 
 // 或利用第三方库 error：https://github.com/pkg/errors
-
-func Test11(t *testing.T) {
+func TestPkgErrors(t *testing.T) {
 
     // 错误包装
     // if err != nil {

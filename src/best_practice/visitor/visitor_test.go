@@ -50,7 +50,7 @@ func XmlVisitor(shape Shape) {
     fmt.Println(string(bytes))
 }
 
-func Test30(t *testing.T) {
+func TestVisitor(t *testing.T) {
     // 这段代码的目的是解耦数据结构和算法：
     // 虽然使用 Strategy 模式也可以完成而且会比较干净，
     // 但是在有些情况下多个 Visitor 是来访问一个数据结构的不同部分，
