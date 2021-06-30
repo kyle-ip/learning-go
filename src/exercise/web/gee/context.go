@@ -6,22 +6,30 @@ import (
     "net/http"
 )
 
+// H is the alias of map, which is used to store JSON.
 type H map[string]interface{}
 
+// Context preserves request message, such as dynamic routing params, middleware output and so on.
+// lifecycle is along with the request, from being handled to returning response
 type Context struct {
-    // origin objects
+
+    // Writer, Req: origin objects
     Writer http.ResponseWriter
     Req    *http.Request
-    // request info
+
+    // Path, Method, Params: request info
     Path   string
     Method string
     Params map[string]string
-    // response info
+
+    // StatusCode: response info
     StatusCode int
-    // middleware
+
+    // handlers, index: middleware
     handlers []HandlerFunc
     index    int
-    // engine pointer
+
+    // engine: pointer
     engine *Engine
 }
 
@@ -90,8 +98,7 @@ func (c *Context) Data(code int, data []byte) {
     c.Writer.Write(data)
 }
 
-// HTML template render
-// refer https://golang.org/pkg/html/template/
+// HTML template render, refer https://golang.org/pkg/html/template/
 func (c *Context) HTML(code int, name string, data interface{}) {
     c.SetHeader("Content-Type", "text/html")
     c.Status(code)
