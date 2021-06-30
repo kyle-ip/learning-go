@@ -17,7 +17,7 @@ type Router struct {
     handlers map[string]HandlerFunc
 }
 
-// newRouter: the constructor of Router
+// newRouter: the Constructor of Router
 func newRouter() *Router {
     return &Router{
         roots:    make(map[string]*node),
