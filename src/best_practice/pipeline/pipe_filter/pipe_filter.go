@@ -2,9 +2,9 @@
 package pipe_filter
 
 import (
-    "errors"
-    "strconv"
-    "strings"
+	"errors"
+	"strconv"
+	"strings"
 )
 
 type Request interface{}
@@ -12,7 +12,7 @@ type Request interface{}
 type Response interface{}
 
 type Filter interface {
-    Process(data Request) (Response, error)
+	Process(data Request) (Response, error)
 }
 
 var SplitFilterWrongFormatError = errors.New("input data should be string")
@@ -20,20 +20,20 @@ var SplitFilterWrongFormatError = errors.New("input data should be string")
 // ========== SplitFilter ==========
 
 type SplitFilter struct {
-    delimiter string
+	delimiter string
 }
 
 func NewSplitFilter(delimiter string) *SplitFilter {
-    return &SplitFilter{delimiter}
+	return &SplitFilter{delimiter}
 }
 
 func (sf *SplitFilter) Process(data Request) (Response, error) {
-    str, ok := data.(string) //检查数据格式/类型，是否可以处理
-    if !ok {
-        return nil, SplitFilterWrongFormatError
-    }
-    parts := strings.Split(str, sf.delimiter)
-    return parts, nil
+	str, ok := data.(string) //检查数据格式/类型，是否可以处理
+	if !ok {
+		return nil, SplitFilterWrongFormatError
+	}
+	parts := strings.Split(str, sf.delimiter)
+	return parts, nil
 }
 
 // ========== SumFilter ==========
@@ -44,19 +44,19 @@ type SumFilter struct {
 }
 
 func NewSumFilter() *SumFilter {
-    return &SumFilter{}
+	return &SumFilter{}
 }
 
 func (sf *SumFilter) Process(data Request) (Response, error) {
-    elems, ok := data.([]int)
-    if !ok {
-        return nil, SumFilterWrongFormatError
-    }
-    ret := 0
-    for _, elem := range elems {
-        ret += elem
-    }
-    return ret, nil
+	elems, ok := data.([]int)
+	if !ok {
+		return nil, SumFilterWrongFormatError
+	}
+	ret := 0
+	for _, elem := range elems {
+		ret += elem
+	}
+	return ret, nil
 }
 
 // ========== ToIntFilter ==========
@@ -67,48 +67,48 @@ type ToIntFilter struct {
 }
 
 func NewToIntFilter() *ToIntFilter {
-    return &ToIntFilter{}
+	return &ToIntFilter{}
 }
 
 func (tif *ToIntFilter) Process(data Request) (Response, error) {
-    parts, ok := data.([]string)
-    if !ok {
-        return nil, ToIntFilterWrongFormatError
-    }
-    var ret []int
-    for _, part := range parts {
-        s, err := strconv.Atoi(part)
-        if err != nil {
-            return nil, err
-        }
-        ret = append(ret, s)
-    }
-    return ret, nil
+	parts, ok := data.([]string)
+	if !ok {
+		return nil, ToIntFilterWrongFormatError
+	}
+	var ret []int
+	for _, part := range parts {
+		s, err := strconv.Atoi(part)
+		if err != nil {
+			return nil, err
+		}
+		ret = append(ret, s)
+	}
+	return ret, nil
 }
 
 // ========== StraightPipeline ==========
 
 func NewStraightPipeline(name string, filters ...Filter) *StraightPipeline {
-    return &StraightPipeline{
-        Name:    name,
-        Filters: &filters,
-    }
+	return &StraightPipeline{
+		Name:    name,
+		Filters: &filters,
+	}
 }
 
 type StraightPipeline struct {
-    Name    string
-    Filters *[]Filter
+	Name    string
+	Filters *[]Filter
 }
 
 func (f *StraightPipeline) Process(data Request) (Response, error) {
-    var ret interface{}
-    var err error
-    for _, filter := range *f.Filters {
-        ret, err = filter.Process(data)
-        if err != nil {
-            return ret, err
-        }
-        data = ret
-    }
-    return ret, err
+	var ret interface{}
+	var err error
+	for _, filter := range *f.Filters {
+		ret, err = filter.Process(data)
+		if err != nil {
+			return ret, err
+		}
+		data = ret
+	}
+	return ret, err
 }

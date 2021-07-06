@@ -24,7 +24,7 @@ func generateUint32Example() {
 
 //go:generate ./gen.sh ./template/container.tmp.go gen string container
 func generateStringExample() {
-	var s string = "Hello"
+	var s = "Hello"
 	c := NewStringContainer()
 	c.Put(s)
 	v := c.Get()
