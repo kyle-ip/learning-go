@@ -13,20 +13,20 @@ import "fmt"
 
 //go:generate ./gen.sh ./template/container.tmp.go gen uint32 container
 func generateUint32Example() {
-	var u uint32 = 42
-	c := NewUint32Container()
-	c.Put(u)
-	v := c.Get()
-	fmt.Printf("generateExample: %d (%T)\n", v, v)
+    var u uint32 = 42
+    c := NewUint32Container()
+    c.Put(u)
+    v := c.Get()
+    fmt.Printf("generateExample: %d (%T)\n", v, v)
 }
 
 // 生成包名 gen，类型是 string，目标文件名是以 container 为后缀。
 
 //go:generate ./gen.sh ./template/container.tmp.go gen string container
 func generateStringExample() {
-	var s = "Hello"
-	c := NewStringContainer()
-	c.Put(s)
-	v := c.Get()
-	fmt.Printf("generateExample: %s (%T)\n", v, v)
+    var s = "Hello"
+    c := NewStringContainer()
+    c.Put(s)
+    v := c.Get()
+    fmt.Printf("generateExample: %s (%T)\n", v, v)
 }

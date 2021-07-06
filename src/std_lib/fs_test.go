@@ -1,17 +1,17 @@
 package std_lib
 
 import (
-	"log"
-	"os"
-	"testing"
+    "log"
+    "os"
+    "testing"
 )
 
 func TestOpenFile(t *testing.T) {
-	f, err := os.Open("fs_test.go") // For read access.
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer func() { f.Close() }()
+    f, err := os.Open("fs_test.go") // For read access.
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer func() { f.Close() }()
 }
 
 func TestReadFile(t *testing.T) {
