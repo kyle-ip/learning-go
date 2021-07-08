@@ -6,6 +6,10 @@ import (
 	"reflect"
 )
 
+// ORM 主要 API，如：
+// 		s.Where("Name = ?", "Tom").Delete()
+//		s.Where("Name = ?", "Tom").Update("Age", 30)
+
 // Insert one or more records in database
 // 插入一或多条记录到数据库中。
 func (s *Session) Insert(values ...interface{}) (int64, error) {
