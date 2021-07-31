@@ -15,8 +15,12 @@ My Golang study notes, include but are not limited to the following contents:
 - Other learning resources.
 
 My posts:
-- [Go Cheat Sheet](https://www.yipwinghong.com/2021/06/13/Go_cheat-sheet/)
+- [Go Cheat Sheet](https://www.yipwinghong.com/2021/06/13/Go_cheat-sheet)
 
-- [Go Error Handling](https://www.yipwinghong.com/2021/07/18/Go_error_handling/)
+- [Go Error Handling](https://www.yipwinghong.com/2021/07/18/Go_error_handling)
 
-- [Go Microservices Governance](https://www.yipwinghong.com/2021/07/12/Go_microservice/)
+- [Go Microservices Governance](https://www.yipwinghong.com/2021/07/12/Go_microservice)
+
+- [Go Channel Applications](https://www.yipwinghong.com/2021/07/28/Go_channel-applications)
+
+- [Go Concurrency Primitives](https://www.yipwinghong.com/2021/06/17/Go_concurrency_primitives)
