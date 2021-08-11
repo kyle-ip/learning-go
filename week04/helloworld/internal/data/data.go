@@ -1,9 +1,9 @@
 package data
 
 import (
-	"helloworld/internal/conf"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
+	"helloworld/internal/conf"
 )
 
 // ProviderSet is data providers.
@@ -21,3 +21,4 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 	}
 	return &Data{}, cleanup, nil
 }
+
