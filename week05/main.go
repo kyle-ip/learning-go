@@ -77,7 +77,7 @@ func (sw *SlidingWindow) Add(metric *Metric) {
 
     // 时间窗口内请求数达到阈值，触发限流。
     if requestCount >= sw.maxRequestCount {
-        _ = (sw.rateLimitCallback)(fmt.Sprintf("requestCount: %d", requestCount))
+        _ = (sw.rateLimitCallback)(fmt.Sprintf("request count: %d", requestCount))
         return
     }
 
@@ -123,8 +123,8 @@ func main() {
     // 采集间隔，滑动窗口大小，最大请求数，最大失败率，度量值输入，限流回调。
     interval := 1 * time.Second
     windowSize := 10
-    maxRequestCount := 11000
-    maxFailureRate := 0.6
+    maxRequestCount := 10000
+    maxFailureRate := 0.5
     metricIn := make(chan *Metric, windowSize)
     rateLimitCallback := func(msg string) error {
         log.Printf("rate limiting! %s \n", msg)
@@ -144,3 +144,12 @@ func main() {
 
     sw.Listen()
 }
+
+// 2021/08/11 11:34:15 ----------
+// 2021/08/11 11:34:15 new metric: Success: 729, Failure: 137
+// 2021/08/11 11:34:15 window [Size: 9, Success: 6452, Failure: 3287]
+// 2021/08/11 11:34:16 ----------
+// 2021/08/11 11:34:16 new metric: Success: 399, Failure: 706
+// 2021/08/11 11:34:16 window [Size: 10, Success: 6851, Failure: 3993]
+// 2021/08/11 11:34:16 rate limiting! request count: 10844
+// 2021/08/11 11:34:17 ----------
