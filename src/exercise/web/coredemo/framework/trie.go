@@ -10,10 +10,11 @@ type Tree struct {
 }
 
 type node struct {
-	isLast  bool              // 该节点是否能成为一个独立的uri, 是否自身就是一个终极节点
-	segment string            // uri中的字符串
-	handler ControllerHandler // 控制器
-	childs  []*node           // 子节点
+	isLast   bool                // 该节点是否能成为一个独立的uri, 是否自身就是一个终极节点
+	segment  string              // uri中的字符串
+	handlers []ControllerHandler // 控制器
+	childs   []*node             // 子节点
+	parent   *node               // 父节点，双向指针
 }
 
 func newNode() *node {
@@ -21,6 +22,7 @@ func newNode() *node {
 		isLast:  false,
 		segment: "",
 		childs:  []*node{},
+		parent:  nil,
 	}
 }
 
@@ -99,7 +101,7 @@ func (n *node) matchNode(uri string) *node {
 }
 
 // AddRouter 增加路由节点, 路由节点有先后顺序
-func (tree *Tree) AddRouter(uri string, handler ControllerHandler) error {
+func (tree *Tree) AddRouter(uri string, handlers []ControllerHandler) error {
 	// /book/list
 	// /book/:id (冲突)
 	// /book/:id/name
@@ -141,8 +143,9 @@ func (tree *Tree) AddRouter(uri string, handler ControllerHandler) error {
 			cnode.segment = segment
 			if isLast {
 				cnode.isLast = true
-				cnode.handler = handler
+				cnode.handlers = handlers
 			}
+			cnode.parent = n
 			n.childs = append(n.childs, cnode)
 			objNode = cnode
 		}
@@ -154,10 +157,30 @@ func (tree *Tree) AddRouter(uri string, handler ControllerHandler) error {
 }
 
 // FindHandler 匹配 uri
-func (tree *Tree) FindHandler(uri string) ControllerHandler {
+func (tree *Tree) FindHandler(uri string) []ControllerHandler {
 	matchNode := tree.root.matchNode(uri)
 	if matchNode == nil {
 		return nil
 	}
-	return matchNode.handler
+	return matchNode.handlers
+}
+
+// parseParamsFromEndNode 将 uri 解析为 params
+func (n *node) parseParamsFromEndNode(uri string) map[string]string {
+	ret := map[string]string{}
+	segments := strings.Split(uri, "/")
+	cnt := len(segments)
+	cur := n
+	for i := cnt - 1; i >= 0; i-- {
+		if cur.segment == "" {
+			break
+		}
+		// 如果是通配符节点
+		if isWildSegment(cur.segment) {
+			// 设置params
+			ret[cur.segment[1:]] = segments[i]
+		}
+		cur = cur.parent
+	}
+	return ret
 }

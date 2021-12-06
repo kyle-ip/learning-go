@@ -6,20 +6,21 @@ import (
 
 func Test_filterChildNodes(t *testing.T) {
 	root := &node{
-		isLast:  false,
-		segment: "",
-		handler: func(*Context) error { return nil },
+		isLast:   false,
+		segment:  "",
+		handlers: []ControllerHandler{func(*Context) error { return nil }},
 		childs: []*node{
 			{
-				isLast:  true,
-				segment: "FOO",
-				handler: func(*Context) error { return nil },
-				childs:  nil,
-			}, {
-				isLast:  false,
-				segment: ":id",
-				handler: nil,
-				childs:  nil,
+				isLast:   true,
+				segment:  "FOO",
+				handlers: []ControllerHandler{func(*Context) error { return nil }},
+				childs:   nil,
+			},
+			{
+				isLast:   false,
+				segment:  ":id",
+				handlers: nil,
+				childs:   nil,
 			},
 		},
 	}
@@ -42,27 +43,28 @@ func Test_filterChildNodes(t *testing.T) {
 
 func Test_matchNode(t *testing.T) {
 	root := &node{
-		isLast:  false,
-		segment: "",
-		handler: func(*Context) error { return nil },
+		isLast:   false,
+		segment:  "",
+		handlers: []ControllerHandler{func(*Context) error { return nil }},
 		childs: []*node{
 			{
-				isLast:  true,
-				segment: "FOO",
-				handler: nil,
+				isLast:   true,
+				segment:  "FOO",
+				handlers: nil,
 				childs: []*node{
 					&node{
-						isLast:  true,
-						segment: "BAR",
-						handler: func(*Context) error { panic("not implemented") },
-						childs:  []*node{},
+						isLast:   true,
+						segment:  "BAR",
+						handlers: []ControllerHandler{func(*Context) error { panic("not implemented") }},
+						childs:   []*node{},
 					},
 				},
-			}, {
-				isLast:  true,
-				segment: ":id",
-				handler: nil,
-				childs:  nil,
+			},
+			{
+				isLast:   true,
+				segment:  ":id",
+				handlers: nil,
+				childs:   nil,
 			},
 		},
 	}
