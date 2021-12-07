@@ -19,6 +19,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/robfig/cron/v3"
 	"github.com/yipwinghong/hade/framework"
 	"io"
 	"os"
@@ -37,6 +38,14 @@ type FParseErrWhitelist flag.ParseErrorsWhitelist
 // you to define the usage and description as part of your command
 // definition to ensure usability.
 type Command struct {
+
+	// Cron 定时器
+	Cron *cron.Cron
+
+	// Cron 命令的说明文档
+	CronSpecs []CronSpec
+
+	// 服务容器
 	container framework.Container
 
 	// Use is the one-line usage message.

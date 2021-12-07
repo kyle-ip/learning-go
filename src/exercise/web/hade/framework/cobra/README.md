@@ -113,7 +113,7 @@ along with the library and its dependencies:
 Next, include Cobra in your application:
 
 ```go
-import "github.com/spf13/cobra"
+import "github.com/yipwinghong/hade/framework/cobra"
 ```
 
 # Usage

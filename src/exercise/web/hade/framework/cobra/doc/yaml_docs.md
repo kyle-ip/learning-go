@@ -8,7 +8,7 @@ package main
 import (
 	"log"
 
-	"github.com/spf13/cobra"
+	"github.com/yipwinghong/hade/framework/cobra"
 	"github.com/spf13/cobra/doc"
 )
 

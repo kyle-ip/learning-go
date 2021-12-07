@@ -20,8 +20,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/yipwinghong/hade/framework/cobra"
 )
 
 // Licenses contains all possible licenses a user can choose from.

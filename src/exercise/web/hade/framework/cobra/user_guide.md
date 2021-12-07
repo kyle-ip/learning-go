@@ -76,7 +76,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spf13/cobra"
+	"github.com/yipwinghong/hade/framework/cobra"
 	"github.com/spf13/viper"
 )
 
@@ -171,7 +171,7 @@ package cmd
 import (
   "fmt"
 
-  "github.com/spf13/cobra"
+  "github.com/yipwinghong/hade/framework/cobra"
 )
 
 func init() {
@@ -198,7 +198,7 @@ package cmd
 import (
   "fmt"
 
-  "github.com/spf13/cobra"
+  "github.com/yipwinghong/hade/framework/cobra"
 )
 
 func init() {
@@ -354,7 +354,7 @@ import (
   "fmt"
   "strings"
 
-  "github.com/spf13/cobra"
+  "github.com/yipwinghong/hade/framework/cobra"
 )
 
 func main() {
@@ -521,7 +521,7 @@ package main
 import (
   "fmt"
 
-  "github.com/spf13/cobra"
+  "github.com/yipwinghong/hade/framework/cobra"
 )
 
 func main() {

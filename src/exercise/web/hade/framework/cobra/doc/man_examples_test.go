@@ -3,8 +3,8 @@ package doc_test
 import (
 	"bytes"
 	"fmt"
-
 	"github.com/spf13/cobra"
+
 	"github.com/spf13/cobra/doc"
 )
 

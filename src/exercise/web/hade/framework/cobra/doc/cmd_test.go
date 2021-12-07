@@ -1,10 +1,9 @@
 package doc
 
 import (
+	"github.com/yipwinghong/hade/framework/cobra"
 	"strings"
 	"testing"
-
-	"github.com/spf13/cobra"
 )
 
 func emptyRun(*cobra.Command, []string) {}
