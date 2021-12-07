@@ -6,6 +6,7 @@ package gin
 
 import (
 	"fmt"
+	"github.com/yipwinghong/hade/framework"
 	"html/template"
 	"net"
 	"net/http"
@@ -55,6 +56,8 @@ type RoutesInfo []RouteInfo
 // Engine is the framework's instance, it contains the muxer, middleware and configuration settings.
 // Create an instance of Engine, by using New() or Default()
 type Engine struct {
+	container framework.Container
+
 	RouterGroup
 
 	// Enables automatic redirection if the current route can't be matched but a
@@ -148,6 +151,7 @@ var _ IRouter = &Engine{}
 func New() *Engine {
 	debugPrintWARNINGNew()
 	engine := &Engine{
+		container: framework.NewHadeContainer(),
 		RouterGroup: RouterGroup{
 			Handlers: nil,
 			basePath: "/",
@@ -186,7 +190,7 @@ func Default() *Engine {
 
 func (engine *Engine) allocateContext() *Context {
 	v := make(Params, 0, engine.maxParams)
-	return &Context{engine: engine, params: &v}
+	return &Context{engine: engine, params: &v, container: engine.container}
 }
 
 // Delims sets template left and right delims and returns a Engine instance.

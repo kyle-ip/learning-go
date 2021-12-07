@@ -7,6 +7,7 @@ package gin
 import (
 	"errors"
 	"fmt"
+	"github.com/yipwinghong/hade/framework"
 	"io"
 	"io/ioutil"
 	"math"
@@ -44,6 +45,8 @@ const abortIndex int8 = math.MaxInt8 / 2
 // Context is the most important part of gin. It allows us to pass variables between middleware,
 // manage the flow, validate the JSON of a request and render a JSON response for example.
 type Context struct {
+	container framework.Container
+
 	writermem responseWriter
 	Request   *http.Request
 	Writer    ResponseWriter

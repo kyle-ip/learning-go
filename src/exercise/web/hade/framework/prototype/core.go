@@ -85,16 +85,16 @@ func (c *Core) ServeHTTP(response http.ResponseWriter, request *http.Request) {
 	ctx := NewContext(request, response)
 
 	// 寻找路由
-	node := c.FindRouteNodeByRequest(request)
-	if node == nil {
+	n := c.FindRouteNodeByRequest(request)
+	if n == nil {
 		// 如果没有找到，这里打印日志
 		ctx.SetStatus(404).Json("not found")
 		return
 	}
 
-	ctx.SetHandlers(node.handlers)
+	ctx.SetHandlers(n.handlers)
 
-	params := node.parseParamsFromEndNode(request.URL.Path)
+	params := n.parseParamsFromEndNode(request.URL.Path)
 	ctx.SetParams(params)
 
 	// 调用路由函数，如果返回 err 代表存在内部错误，返回 500 状态码

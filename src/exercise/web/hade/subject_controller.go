@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/yipwinghong/hade/framework/gin"
+	"github.com/yipwinghong/hade/provider/demo"
 )
 
 func SubjectAddController(c *gin.Context) {
@@ -10,7 +11,10 @@ func SubjectAddController(c *gin.Context) {
 }
 
 func SubjectListController(c *gin.Context) {
-	c.ISetOkStatus().IJson("ok, SubjectListController")
+	//c.ISetOkStatus().IJson("ok, SubjectListController")
+	demoService := c.MustMake(demo.Key).(demo.Service)
+	foo := demoService.GetFoo()
+	c.ISetOkStatus().IJson(foo)
 }
 
 func SubjectDelController(c *gin.Context) {
