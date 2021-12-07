@@ -5,7 +5,7 @@ import (
 	"github.com/yipwinghong/hade/framework/contract"
 )
 
-// HadeAppProvider 提供App的具体实现方法
+// HadeAppProvider 提供 App 的具体实现方法
 type HadeAppProvider struct {
 	BaseFolder string
 }

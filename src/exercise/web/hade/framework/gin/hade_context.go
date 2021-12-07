@@ -2,19 +2,10 @@ package gin
 
 import (
 	"context"
-	"github.com/yipwinghong/hade/framework"
 )
 
 func (ctx *Context) BaseContext() context.Context {
 	return ctx.Request.Context()
-}
-
-func (engine *Engine) Bind(provider framework.ServiceProvider) error {
-	return engine.container.Bind(provider)
-}
-
-func (engine *Engine) IsBind(key string) bool {
-	return engine.container.IsBind(key)
 }
 
 func (ctx *Context) Make(key string) (interface{}, error) {
