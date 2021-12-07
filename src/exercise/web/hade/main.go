@@ -2,9 +2,13 @@ package main
 
 import (
 	"context"
+	"github.com/yipwinghong/hade/app/provider/demo"
 	"github.com/yipwinghong/hade/framework/gin"
 	"github.com/yipwinghong/hade/framework/middleware"
-	"github.com/yipwinghong/hade/provider/demo"
+	"github.com/yipwinghong/hade/framework/provider/app"
+
+	hadeHttp "github.com/yipwinghong/hade/app/http"
+
 	"log"
 	"net/http"
 	"os"
@@ -16,10 +20,14 @@ import (
 func main() {
 	core := gin.New()
 
-	core.Bind(&demo.DemoServiceProvider{})
+	core.Bind(&app.HadeAppProvider{})
+	core.Bind(&demo.DemoProvider{})
+
 	core.Use(gin.Recovery())
 	core.Use(middleware.Cost())
-	registerRouter(core)
+
+	hadeHttp.Routes(core)
+
 	server := &http.Server{
 		Handler: core,
 		Addr:    ":8888",
