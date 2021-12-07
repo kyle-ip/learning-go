@@ -10,7 +10,7 @@ require (
 	github.com/inconshreveable/mousetrap v1.0.0
 	github.com/json-iterator/go v1.1.11
 	github.com/mattn/go-isatty v0.0.12
-	github.com/robfig/cron/v3 v3.0.1
+	github.com/robfig/cron/v3 v3.0.0
 	github.com/spf13/cast v1.4.0
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/pflag v1.0.5
