@@ -7,10 +7,11 @@ import (
 	"api-service/pkg/log"
 	"api-service/pkg/log/lager"
 	"api-service/pkg/token"
-	"api-service/service"
 	"api-service/util"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"
+	"sync"
 )
 
 // VO 对象
@@ -124,7 +125,7 @@ func List(c *gin.Context) {
 		return
 	}
 
-	infos, count, err := service.ListUser(r.Username, r.Offset, r.Limit)
+	infos, count, err := listUser(r.Username, r.Offset, r.Limit)
 	if err != nil {
 		util.SendResponse(c, err, nil)
 		return
@@ -237,4 +238,68 @@ func Login(c *gin.Context) {
 		return
 	}
 	util.SendResponse(c, nil, model.Token{Token: t})
+}
+
+func listUser(username string, offset, limit int) ([]*model.UserInfo, uint64, error) {
+	infos := make([]*model.UserInfo, 0)
+	users, count, err := model.ListUser(username, offset, limit)
+	if err != nil {
+		return nil, count, err
+	}
+
+	var ids []uint64
+	for _, user := range users {
+		ids = append(ids, user.Id)
+	}
+
+	wg := sync.WaitGroup{}
+	userList := model.UserList{
+		Lock:  new(sync.Mutex),
+		IdMap: make(map[uint64]*model.UserInfo, len(users)),
+	}
+
+	errChan := make(chan error, 1)
+	finished := make(chan bool, 1)
+
+	// Improve query efficiency in parallel
+	for _, u := range users {
+		wg.Add(1)
+		go func(u *model.UserModel) {
+			defer wg.Done()
+
+			shortId, err := util.GenShortId()
+			if err != nil {
+				errChan <- err
+				return
+			}
+
+			userList.Lock.Lock()
+			defer userList.Lock.Unlock()
+			userList.IdMap[u.Id] = &model.UserInfo{
+				Id:        u.Id,
+				Username:  u.Username,
+				SayHello:  fmt.Sprintf("Hello %s", shortId),
+				Password:  u.Password,
+				CreatedAt: u.CreatedAt.Format("2006-01-02 15:04:05"),
+				UpdatedAt: u.UpdatedAt.Format("2006-01-02 15:04:05"),
+			}
+		}(u)
+	}
+
+	go func() {
+		wg.Wait()
+		close(finished)
+	}()
+
+	select {
+	case <-finished:
+	case err := <-errChan:
+		return nil, count, err
+	}
+
+	for _, id := range ids {
+		infos = append(infos, userList.IdMap[id])
+	}
+
+	return infos, count, nil
 }
