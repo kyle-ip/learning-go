@@ -1,5 +1,8 @@
 package util
 
+// 测试：https://juejin.cn/book/6844733730678898702/section/6844733730746007565
+// 性能分析：https://juejin.cn/book/6844733730678898702/section/6844733730746023949
+
 import (
 	"testing"
 )

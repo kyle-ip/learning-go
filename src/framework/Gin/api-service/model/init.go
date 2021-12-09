@@ -51,10 +51,6 @@ func InitSelfDB() *gorm.DB {
 		viper.GetString("db.name"))
 }
 
-func GetSelfDB() *gorm.DB {
-	return InitSelfDB()
-}
-
 func InitDockerDB() *gorm.DB {
 	return openDB(viper.GetString("docker_db.username"),
 		viper.GetString("docker_db.password"),
@@ -62,14 +58,10 @@ func InitDockerDB() *gorm.DB {
 		viper.GetString("docker_db.name"))
 }
 
-func GetDockerDB() *gorm.DB {
-	return InitDockerDB()
-}
-
 func (db *Database) Init() {
 	DB = &Database{
-		Self:   GetSelfDB(),
-		Docker: GetDockerDB(),
+		Self:   InitSelfDB(),
+		Docker: InitDockerDB(),
 	}
 }
 
