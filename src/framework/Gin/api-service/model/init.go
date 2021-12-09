@@ -2,8 +2,9 @@ package model
 
 import (
 	"fmt"
-	//"github.com/lexkong/log"
 	"github.com/spf13/viper"
+	"log"
+
 	// MySQL driver.
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -28,7 +29,7 @@ func openDB(username, password, addr, name string) *gorm.DB {
 
 	db, err := gorm.Open("mysql", config)
 	if err != nil {
-		//log.Errorf(err, "Database connection failed. Database name: %s", name)
+		log.Fatalf(err.Error(), "Database connection failed. Database name: %s", name)
 	}
 
 	// set for db connection
@@ -39,11 +40,11 @@ func openDB(username, password, addr, name string) *gorm.DB {
 
 func setupDB(db *gorm.DB) {
 	db.LogMode(viper.GetBool("gormlog"))
-	//db.DB().SetMaxOpenConns(20000) // 用于设置最大打开的连接数，默认值为0表示不限制.设置最大的连接数，可以避免并发太高导致连接mysql出现too many connections的错误。
-	db.DB().SetMaxIdleConns(0) // 用于设置闲置的连接数.设置闲置的连接数则当开启的一个连接使用完成后可以放在池里等候下一次使用。
+	db.DB().SetMaxOpenConns(20000) // 设置最大的连接数，避免并发太高导致 too many connections。
+	db.DB().SetMaxIdleConns(0)     // 设置闲置的连接数，当开启的一个连接使用完成后可以放在池里等候下一次使用。
 }
 
-// used for cli
+// InitSelfDB used for cli
 func InitSelfDB() *gorm.DB {
 	return openDB(viper.GetString("db.username"),
 		viper.GetString("db.password"),
@@ -74,6 +75,6 @@ func (db *Database) Init() {
 }
 
 func (db *Database) Close() {
-	DB.Self.Close()
-	DB.Docker.Close()
+	_ = DB.Self.Close()
+	_ = DB.Docker.Close()
 }

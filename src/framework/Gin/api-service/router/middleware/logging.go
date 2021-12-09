@@ -12,7 +12,6 @@ import (
 	"api-service/pkg/errno"
 
 	"github.com/gin-gonic/gin"
-	//"github.com/lexkong/log"
 	"github.com/willf/pad"
 )
 
@@ -84,6 +83,5 @@ func Logging() gin.HandlerFunc {
 		}
 
 		log.Printf("%-13s | %-12s | %s %s | {code: %d, message: %s}", latency, ip, pad.Right(method, 5, ""), path, code, message)
-		//log.Infof("%-13s | %-12s | %s %s | {code: %d, message: %s}", latency, ip, pad.Right(method, 5, ""), path, code, message)
 	}
 }

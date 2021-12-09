@@ -52,8 +52,8 @@ definitions:
 host: localhost:8080
 info:
   contact:
-    email: 466701708@qq.com
-    name: lkong
+    email: yipwinghong@outlook.com
+    name: ywh
     url: http://www.swagger.io/support
   description: api-service demo
   license: {}

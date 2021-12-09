@@ -1,11 +1,10 @@
 package config
 
 import (
-	"strings"
-
 	"github.com/fsnotify/fsnotify"
-	//"github.com/lexkong/log"
 	"github.com/spf13/viper"
+	"log"
+	"strings"
 )
 
 type Config struct {
@@ -38,15 +37,14 @@ func (c *Config) initConfig() error {
 		viper.AddConfigPath("conf") // 如果没有指定配置文件，则解析默认的配置文件
 		viper.SetConfigName("config")
 	}
-	viper.SetConfigType("yaml")     // 设置配置文件格式为YAML
-	viper.AutomaticEnv()            // 读取匹配的环境变量
-	viper.SetEnvPrefix("APISERVER") // 读取环境变量的前缀为APISERVER
+	viper.SetConfigType("yaml")       // 设置配置文件格式为YAML
+	viper.AutomaticEnv()              // 读取匹配的环境变量
+	viper.SetEnvPrefix("API_SERVICE") // 读取环境变量的前缀为 API_SERVICE
 	replacer := strings.NewReplacer(".", "_")
 	viper.SetEnvKeyReplacer(replacer)
-	if err := viper.ReadInConfig(); err != nil { // viper解析配置文件
+	if err := viper.ReadInConfig(); err != nil { // viper 解析配置文件
 		return err
 	}
-
 	return nil
 }
 
@@ -69,6 +67,6 @@ func (c *Config) initConfig() error {
 func (c *Config) watchConfig() {
 	viper.WatchConfig()
 	viper.OnConfigChange(func(e fsnotify.Event) {
-		//log.Infof("Config file changed: %s", e.Name)
+		log.Printf("Config file changed: %s", e.Name)
 	})
 }
