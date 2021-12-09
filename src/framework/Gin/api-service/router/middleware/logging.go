@@ -1,10 +1,10 @@
 package middleware
 
 import (
+	"api-service/pkg/log"
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"regexp"
 	"time"
 
@@ -25,7 +25,7 @@ func (w bodyLogWriter) Write(b []byte) (int, error) {
 	return w.ResponseWriter.Write(b)
 }
 
-// Logging is a middleware function that logs the each request.
+// Logging is a middleware function that logs the request.
 func Logging() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now().UTC()
@@ -54,7 +54,7 @@ func Logging() gin.HandlerFunc {
 		method := c.Request.Method
 		ip := c.ClientIP()
 
-		log.Printf("New request come in, path: %s, Method: %s, body `%s`", path, method, string(bodyBytes))
+		log.Infof("New request come in, path: %s, Method: %s, body `%s`", path, method, string(bodyBytes))
 		//log.Debugf("New request come in, path: %s, Method: %s, body `%s`", path, method, string(bodyBytes))
 		blw := &bodyLogWriter{
 			body:           bytes.NewBufferString(""),
@@ -82,6 +82,6 @@ func Logging() gin.HandlerFunc {
 			message = response.Message
 		}
 
-		log.Printf("%-13s | %-12s | %s %s | {code: %d, message: %s}", latency, ip, pad.Right(method, 5, ""), path, code, message)
+		log.Infof("%-13s | %-12s | %s %s | {code: %d, message: %s}", latency, ip, pad.Right(method, 5, ""), path, code, message)
 	}
 }

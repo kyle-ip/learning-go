@@ -1,9 +1,9 @@
 package model
 
 import (
+	"api-service/pkg/log"
 	"fmt"
 	"github.com/spf13/viper"
-	"log"
 
 	// MySQL driver.
 	"github.com/jinzhu/gorm"
@@ -29,9 +29,8 @@ func openDB(username, password, addr, name string) *gorm.DB {
 
 	db, err := gorm.Open("mysql", config)
 	if err != nil {
-		log.Fatalf(err.Error(), "Database connection failed. Database name: %s", name)
+		log.Fatalf(err, "Database connection failed. Database name: %s", name)
 	}
-
 	// set for db connection
 	setupDB(db)
 

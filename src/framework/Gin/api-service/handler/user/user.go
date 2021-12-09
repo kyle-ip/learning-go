@@ -5,10 +5,10 @@ import (
 	"api-service/model"
 	"api-service/pkg/auth"
 	"api-service/pkg/errno"
+	"api-service/pkg/log"
 	"api-service/pkg/token"
 	"api-service/service"
 	"github.com/gin-gonic/gin"
-	"log"
 	"strconv"
 )
 
@@ -115,7 +115,7 @@ func Get(c *gin.Context) {
 // @Success 200 {object} user.SwaggerListResponse "{"code":0,"message":"OK","data":{"totalCount":1,"userList":[{"id":0,"username":"admin","random":"user 'admin' get random string 'EnqntiSig'","password":"$2a$10$veGcArz47VGj7l9xN7g2iuT9TF21jLI1YGXarGzvARNdnt4inC9PG","createdAt":"2018-05-28 00:25:33","updatedAt":"2018-05-28 00:25:33"}]}}"
 // @Router /user [get]
 func List(c *gin.Context) {
-	log.Println("List function called.")
+	log.Info("List function called.")
 	var r ListRequest
 	if err := c.Bind(&r); err != nil {
 		SendResponse(c, errno.ErrBind, nil)
@@ -135,7 +135,7 @@ func List(c *gin.Context) {
 }
 
 // Delete
-// @Summary Delete an user by the user identifier
+// @Summary Delete a user by the user identifier
 // @Description Delete user by ID
 // @Tags user
 // @Accept  json

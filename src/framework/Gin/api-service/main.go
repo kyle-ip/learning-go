@@ -1,10 +1,10 @@
 package main
 
 import (
+	"api-service/pkg/log"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
@@ -74,9 +74,9 @@ func main() {
 	// Ping the server to make sure the router is working.
 	go func() {
 		if err := pingServer(); err != nil {
-			log.Fatal("The router has no response, or it might took too long to start up.", err)
+			log.Error("The router has no response, or it might took too long to start up.", err)
 		}
-		log.Println("The router has been deployed successfully.")
+		log.Infof("The router has been deployed successfully.")
 	}()
 
 	// Start to listening the incoming requests.
@@ -84,12 +84,12 @@ func main() {
 	key := viper.GetString("tls.key")
 	if cert != "" && key != "" {
 		go func() {
-			log.Printf("Start to listening the incoming requests on https address: %s", viper.GetString("tls.addr"))
-			log.Println(http.ListenAndServeTLS(viper.GetString("tls.addr"), cert, key, g).Error())
+			log.Infof("Start to listening the incoming requests on https address: %s", viper.GetString("tls.addr"))
+			log.Infof(http.ListenAndServeTLS(viper.GetString("tls.addr"), cert, key, g).Error())
 		}()
 	}
-	log.Printf("Start to listening the incoming requests on http address: %s\n", viper.GetString("addr"))
-	log.Println(http.ListenAndServe(viper.GetString("addr"), g).Error())
+	log.Infof("Start to listening the incoming requests on http address: %s\n", viper.GetString("addr"))
+	log.Infof(http.ListenAndServe(viper.GetString("addr"), g).Error())
 }
 
 // pingServer pings the http server to make sure the router is working.
@@ -103,7 +103,7 @@ func pingServer() error {
 		}
 
 		// Sleep for a second to continue the next ping.
-		log.Println("Waiting for the router, retry in 1 second.")
+		log.Infof("Waiting for the router, retry in 1 second.")
 		time.Sleep(time.Second)
 	}
 	return errors.New("cannot connect to the router")
