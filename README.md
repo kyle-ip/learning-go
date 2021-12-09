@@ -4,7 +4,7 @@
 
 My Golang study notes, include but are not limited to the following contents:
 
-- Data Structure and Algorithm implemented in Go.
+- Data Structure and Algorithm.
 
 - Best Practice on Engineering.
 
@@ -12,7 +12,9 @@ My Golang study notes, include but are not limited to the following contents:
 
 - Some personal ideas.
 
-- Other learning resources.
+- Guidelines and Learning resources.
+
+- ...
 
 My posts:
 - [Go Cheat Sheet](https://www.yipwinghong.com/2021/06/13/Go_cheat-sheet)
