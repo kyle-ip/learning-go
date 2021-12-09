@@ -10,10 +10,11 @@ import (
 )
 
 // UserModel User represents a registered user.
+// admin:admin
 type UserModel struct {
 	BaseModel
 	Username string `json:"username" gorm:"column:username;not null" binding:"required" validate:"min=1,max=32"`
-	Password string `json:"password" gorm:"column:password;not null" binding:"required" validate:"min=5,max=128"`
+	Password string `json:"-" gorm:"column:password;not null" binding:"required" validate:"min=5,max=128"`
 }
 
 func (u *UserModel) TableName() string {
@@ -32,15 +33,16 @@ func DeleteUser(id uint64) error {
 	return DB.Self.Delete(&user).Error
 }
 
-// Update updates an user account information.
+// Update updates a user account information.
 func (u *UserModel) Update() error {
 	return DB.Self.Save(u).Error
 }
 
-// GetUser gets an user by the user identifier.
+// GetUser gets a user by the user identifier.
 func GetUser(username string) (*UserModel, error) {
 	u := &UserModel{}
 	d := DB.Self.Where("username = ?", username).First(&u)
+	// u.Password = ""
 	return u, d.Error
 }
 

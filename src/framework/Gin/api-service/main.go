@@ -30,10 +30,15 @@ var (
 // @version 1.0
 // @description api-service demo
 
+// @contact.name yipwinghong
+// @contact.url http://www.swagger.io/support
+// @contact.email yipwinghong
+
 // @host localhost:8080
 // @BasePath /v1
 func main() {
 	pflag.Parse()
+	// API version info
 	if *version {
 		value := v.Get()
 		marshalled, err := json.MarshalIndent(&value, "", "  ")
@@ -41,7 +46,6 @@ func main() {
 			fmt.Printf("%v\n", err)
 			os.Exit(1)
 		}
-
 		fmt.Println(string(marshalled))
 		return
 	}
@@ -97,7 +101,8 @@ func pingServer() error {
 	for i := 0; i < viper.GetInt("max_ping_count"); i++ {
 
 		// Ping the server by sending a GET request to `/health`.
-		resp, err := http.Get(viper.GetString("url") + "/sd/health")
+
+		resp, err := http.Get(fmt.Sprintf("%s/%s/monitor/health", viper.GetString("url"), viper.GetString("version")))
 		if err == nil && resp.StatusCode == 200 {
 			return nil
 		}

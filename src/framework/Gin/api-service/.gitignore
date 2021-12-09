@@ -4,8 +4,8 @@
 *.so
 
 # logs
-log
-logs
+./log
+./logs
 
 # Editors
 *~

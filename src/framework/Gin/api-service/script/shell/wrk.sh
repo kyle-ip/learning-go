@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 测试：https://juejin.cn/book/6844733730678898702/section/6844733730750365709
+
 : << EOF
 API 性能测试脚本，会自动执行 wrk 命令，采集数据、分析数据并调用 gnuplot 画图
 
@@ -30,7 +32,7 @@ threads=144
 if [ "$1" != "" ];then
 	url="$1"
 else
-	url="http://127.0.0.1:8080/sd/health"
+	url="http://127.0.0.1:8080/monitor/health"
 fi
 
 cmd="wrk --latency -t$threads -d$d -T30s $url"
@@ -187,7 +189,7 @@ EOF
 
 if [ "$1" == "diff" ];then
 	join $2 $3 > /tmp/plot_diff.dat
-	plotDiff `basename $2` `basename $3`
+	plotDiff $(basename $2) $(basename $3)
 	exit 0
 fi
 
@@ -198,7 +200,7 @@ for c in $concurrent
 do
 	wrkcmd="$cmd -c $c"
 	echo -e "\nRunning wrk command: $wrkcmd"
-	result=`eval $wrkcmd`
+	result=$(eval "$wrkcmd")
 	convertPlotData "$result"
 done
 

@@ -45,7 +45,6 @@ func DecodeErr(err error) (int, string) {
 	if err == nil {
 		return OK.Code, OK.Message
 	}
-
 	switch typed := err.(type) {
 	case *Err:
 		return typed.Code, typed.Message
@@ -53,6 +52,5 @@ func DecodeErr(err error) (int, string) {
 		return typed.Code, typed.Message
 	default:
 	}
-
 	return InternalServerError.Code, err.Error()
 }
