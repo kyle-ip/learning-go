@@ -14,9 +14,9 @@ var doc = `{
         "description": "api-service demo",
         "title": "Apiserver Example API",
         "contact": {
-            "name": "lkong",
+            "name": "ywh",
             "url": "http://www.swagger.io/support",
-            "email": "466701708@qq.com"
+            "email": "yipwinghong@outlook.com"
         },
         "license": {},
         "version": "1.0"

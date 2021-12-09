@@ -116,7 +116,6 @@ func Get(c *gin.Context) {
 // @Router /user [get]
 func List(c *gin.Context) {
 	log.Println("List function called.")
-	//log.Info("List function called.")
 	var r ListRequest
 	if err := c.Bind(&r); err != nil {
 		SendResponse(c, errno.ErrBind, nil)

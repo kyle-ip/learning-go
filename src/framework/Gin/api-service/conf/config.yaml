@@ -1,4 +1,4 @@
-runmode: debug                 # 开发模式, debug, release, test
+mode: debug                    # 开发模式, debug, release, test
 addr: :8080                    # HTTP 绑定端口
 name: api-service              # API Server 的名字
 url: http://127.0.0.1:8080     # pingServer 函数请求的 API 服务器的 ip:port
