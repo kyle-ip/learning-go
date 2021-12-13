@@ -6,6 +6,8 @@ My Golang study notes, include but are not limited to the following contents:
 
 - Data Structure and Algorithm.
 
+- Design Patterns
+
 - Best Practice on Engineering.
 
 - Development guide.
