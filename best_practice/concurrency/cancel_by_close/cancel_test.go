@@ -15,11 +15,11 @@ func isCancelled(cancelChan chan struct{}) bool {
 	}
 }
 
-func cancel_1(cancelChan chan struct{}) {
+func cancel1(cancelChan chan struct{}) {
 	cancelChan <- struct{}{}
 }
 
-func cancel_2(cancelChan chan struct{}) {
+func cancel2(cancelChan chan struct{}) {
 	close(cancelChan)
 }
 
@@ -36,6 +36,6 @@ func TestCancel(t *testing.T) {
 			fmt.Println(i, "Cancelled")
 		}(i, cancelChan)
 	}
-	cancel_2(cancelChan)
+	cancel2(cancelChan)
 	time.Sleep(time.Second * 1)
 }
