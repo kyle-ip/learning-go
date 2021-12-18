@@ -1,4 +1,4 @@
-package std_lib
+package library
 
 import (
 	"log"
@@ -12,8 +12,4 @@ func TestOpenFile(t *testing.T) {
 		log.Fatal(err)
 	}
 	defer func() { f.Close() }()
-}
-
-func TestReadFile(t *testing.T) {
-
 }

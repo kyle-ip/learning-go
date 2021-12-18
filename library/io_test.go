@@ -1,4 +1,4 @@
-package std_lib
+package library
 
 import (
 	"bufio"
@@ -119,6 +119,9 @@ func TestWriteAt(t *testing.T) {
 	// if file 'test.txt' not exists, file.Close() will cause panic.
 	// defer file.Close() should be placed after error check.
 	file, _ = os.Open("test.txt")
+	defer func() {
+		file.Close()
+	}()
 	writer := bufio.NewWriter(os.Stdout)
 	_, err = writer.ReadFrom(file)
 	_ = writer.Flush()
@@ -132,6 +135,10 @@ func TestSeeker(t *testing.T) {
 	fmt.Println(n)
 	r, _, _ := reader.ReadRune()
 	fmt.Printf("%c\n", r)
+}
+
+func TestCloser(t *testing.T) {
+
 }
 
 func TestByte(t *testing.T) {

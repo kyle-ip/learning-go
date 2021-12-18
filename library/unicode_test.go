@@ -1,1 +1,1 @@
-package std_lib
+package library
