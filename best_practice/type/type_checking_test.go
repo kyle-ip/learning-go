@@ -57,7 +57,7 @@ func NewContainer(t reflect.Type, size int) *ReflectContainer {
 func (c *ReflectContainer) Put(val interface{}) error {
 	// 检查 val 是否和 Slice 的类型一致。
 	if reflect.ValueOf(val).Type() != c.s.Type().Elem() {
-		return fmt.Errorf("Put: cannot put a %T into a slice of %s", val, c.s.Type().Elem())
+		return fmt.Errorf("cannot put a %T into a slice of %s", val, c.s.Type().Elem())
 	}
 	c.s = reflect.Append(c.s, reflect.ValueOf(val))
 	return nil
@@ -66,7 +66,7 @@ func (c *ReflectContainer) Put(val interface{}) error {
 func (c *ReflectContainer) Get(refval interface{}) error {
 	// 需要用入参的方式，因为无法返回 reflect.Value 或 interface{}，否则还要做 Type Assert。
 	if reflect.ValueOf(refval).Kind() != reflect.Ptr || reflect.ValueOf(refval).Elem().Type() != c.s.Type().Elem() {
-		return fmt.Errorf("Get: needs *%s but got %T", c.s.Type().Elem(), refval)
+		return fmt.Errorf("needs *%s but got %T", c.s.Type().Elem(), refval)
 	}
 	reflect.ValueOf(refval).Elem().Set(c.s.Index(0))
 	c.s = c.s.Slice(1, c.s.Len())
@@ -74,8 +74,7 @@ func (c *ReflectContainer) Get(refval interface{}) error {
 }
 
 func TestTypeCheckByReflection(t *testing.T) {
-	f1 := 3.1415926
-	f2 := 1.41421356237
+	f1, f2 := 3.1415926, 1.41421356237
 
 	c := NewContainer(reflect.TypeOf(f1), 16)
 

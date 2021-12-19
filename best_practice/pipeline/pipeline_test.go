@@ -85,6 +85,7 @@ type EchoFunc func([]int) <-chan int
 type PipeFunc func(<-chan int) <-chan int
 
 func pipeline(nums []int, echo EchoFunc, pipeFns ...PipeFunc) <-chan int {
+	// []int => <-chan int
 	ch := echo(nums)
 	for i := range pipeFns {
 		ch = pipeFns[i](ch)
@@ -93,46 +94,37 @@ func pipeline(nums []int, echo EchoFunc, pipeFns ...PipeFunc) <-chan int {
 }
 
 func TestChannelForward(t *testing.T) {
-	// 效果：echo $nums | square | sum
+	// 效果等价于：echo $nums | square | sum
 	var nums1 = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	for n := range sum(square(odd(echo(nums1)))) {
 		fmt.Println(n)
 	}
 	// 或使用代理函数完成
-	// var nums = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	// for n := range pipeline(nums, gen, odd, sq, sum) {
-	// 	 fmt.Println(n)
-	// }
+	var nums = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	for n := range pipeline(nums, echo, odd, square, sum) {
+		fmt.Println(n)
+	}
 }
 
 // ========== Fan in/Out ==========
+
 // Goroutine 和 Channel 可以写出 1 对多或多对 1 的 Pipeline，即 Fan In/ Fan Out。
-
-func makeRange(min, max int) []int {
-	a := make([]int, max-min+1)
-	for i := range a {
-		a[i] = min + i
-	}
-	return a
-}
-
-func isPrime(value int) bool {
-	for i := 2; i <= int(math.Floor(float64(value)/2)); i++ {
-		if value%i == 0 {
-			return false
-		}
-	}
-	return value > 1
-}
 
 func prime(in <-chan int) <-chan int {
 	out := make(chan int)
 	go func() {
 		for n := range in {
-			if isPrime(n) {
+			// 如果是质数，则写入 out。
+			for i := 2; i <= int(math.Floor(float64(n)/2)); i++ {
+				if n%i == 0 {
+					continue
+				}
+			}
+			if n > 1 {
 				out <- n
 			}
 		}
+		// 写入所有质数后关闭。
 		close(out)
 	}()
 	return out
@@ -159,16 +151,21 @@ func merge(cs []<-chan int) <-chan int {
 }
 
 func TestFanInFanOut(t *testing.T) {
+
+	// 求 [1, 10000] 范围内所有质数之和。
+
 	// 构造数组 [1, 10000]。
-	nums := makeRange(1, 10000)
+	max, min := 1, 10000
+	nums := make([]int, max-min+1)
+	for i := range nums {
+		nums[i] = min + i
+	}
 
 	// fan out: 把数组 echo 到一个 Channel in 中。
 	in := echo(nums)
 
 	// 生成 5 个 Channel，都调用 sum(prime(in)) ，于是每个 Sum 的 Goroutine 都会开始计算和；
-	const nProcess = 5
-	var chans [nProcess]<-chan int
-
+	var chans [5]<-chan int
 	for i := range chans {
 		chans[i] = sum(prime(in))
 	}

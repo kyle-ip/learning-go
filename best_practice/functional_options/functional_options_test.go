@@ -70,6 +70,8 @@ func TestConfigStruct(t *testing.T) {
 }
 
 // ========== Builder 模式 ==========
+// 使用 Builder 可支持链式调用，但需要多加一个 Builder 类。
+// 也可以直接在 Server 上进行 Builder 改造，但在处理错误时会更麻烦。
 
 type ServerBuilder struct {
 	Server
@@ -154,7 +156,7 @@ func TLS(tls *tls.Config) Option {
 
 func NewServerFP(addr string, port int, options ...Option) (*Server, error) {
 
-	// 有一个可变参数 options 可以传出多个上面的函数，然后使用 for-loop 来设置 Server 对象。
+	// 1. 必选参数在构造 struct 时即指定 。
 	srv := Server{
 		Addr:     addr,
 		Port:     port,
@@ -163,6 +165,8 @@ func NewServerFP(addr string, port int, options ...Option) (*Server, error) {
 		MaxConn:  1000,
 		TLS:      nil,
 	}
+
+	// 2. 可选参数以 options 函数列表的方式传入，依次执行。
 	for _, option := range options {
 		option(&srv)
 	}

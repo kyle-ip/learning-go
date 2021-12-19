@@ -84,7 +84,7 @@ func TestTimeSum(t *testing.T) {
 
 func WithServerHeader(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Println("--->WithServerHeader()")
+		log.Println("---> WithServerHeader()")
 		w.Header().Set("Server", "HelloServer v0.0.1")
 		h(w, r)
 	}
@@ -107,6 +107,20 @@ func TestServerHeader(t *testing.T) {
 
 type HttpHandlerDecorator func(http.HandlerFunc) http.HandlerFunc
 
+func WithBasicAuth(h http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Println("---> WithBasicAuth()")
+		h(w, r)
+	}
+}
+
+func WithDebugLog(h http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Println("---> WithDebugLog()")
+		h(w, r)
+	}
+}
+
 func Handler(h http.HandlerFunc, decors ...HttpHandlerDecorator) http.HandlerFunc {
 	for i := range decors {
 		d := decors[len(decors)-1-i] // iterate in reverse
@@ -115,23 +129,21 @@ func Handler(h http.HandlerFunc, decors ...HttpHandlerDecorator) http.HandlerFun
 	return h
 }
 
-// http.HandleFunc("/v4/hello", Handler(hello, WithServerHeader, WithBasicAuth, WithDebugLog))
+func TestMultiDecorator(t *testing.T) {
+	http.HandleFunc("/v4/hello", Handler(hello, WithServerHeader, WithBasicAuth, WithDebugLog))
+}
 
 // ========== 泛型装饰器 ==========
 
-func Decorator(decoPtr, fn interface{}) (err error) {
-	// 两个参数：出参 decoPtr（装饰后的函数），入参 fn（待装饰的函数）。
-	var decoratedFunc, targetFunc reflect.Value
-	decoratedFunc = reflect.ValueOf(decoPtr).Elem()
-	targetFunc = reflect.ValueOf(fn)
-	v := reflect.MakeFunc(targetFunc.Type(), func(in []reflect.Value) (out []reflect.Value) {
+func Decorator(decoPtr, fn interface{}) {
+	// 两个 reflect.Value 类型参数：入参 fn（待装饰的函数），出参 decoPtr（装饰后的函数）。
+	targetFunc, decoratedFunc := reflect.ValueOf(fn), reflect.ValueOf(decoPtr).Elem()
+	decoratedFunc.Set(reflect.MakeFunc(targetFunc.Type(), func(in []reflect.Value) (out []reflect.Value) {
 		fmt.Println("before")
 		out = targetFunc.Call(in)
 		fmt.Println("after")
 		return
-	})
-	decoratedFunc.Set(v)
-	return
+	}))
 }
 
 func foo(a, b, c int) int {
@@ -145,10 +157,7 @@ func bar(a, b string) string {
 }
 
 func TestGenericsDecorator(t *testing.T) {
-	mybar := bar
-	err := Decorator(&mybar, bar)
-	if err != nil {
-		return
-	}
-	mybar("hello,", "world!")
+	var decoratedFunc func(a, b string) string
+	Decorator(&decoratedFunc, bar)
+	decoratedFunc("hello", "world!")
 }

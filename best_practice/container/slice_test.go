@@ -3,7 +3,6 @@ package container
 import (
 	"bytes"
 	"fmt"
-	"reflect"
 	"testing"
 )
 
@@ -25,13 +24,25 @@ func TestSlice(t *testing.T) {
 	a := make([]int, 5)
 	a[3] = 42
 	a[4] = 100
+	fmt.Println(a)
+	// [0 0 0 42 100]
 
-	// 切分后赋值给 b，然后赋值 b[1]。
+	// 切分后赋值给 b，然后赋值 b[1]，由于此时 a、b 仍共享内存，所以会影响到 a 中的值。
 	b := a[1:4]
 	b[1] = 99
+	// a: [0 0 0 42 100]   =>   [0 0 99 42 100]
+	// b:   [0 0 42]              [0 99 42]
+	fmt.Println(a)
 
-	// 假使对 a 进行 append 操作，会对 a 重新分配内存，导致 a 和 b 不再共享。
+	// 此时对 a 进行 append 操作，会对 a 重新分配内存，导致 a 和 b 不再共享。
 	// append 只有在 cap 不够用时，才会重新分配内存以扩大容量。
+	a = append(a, 11)
+	b[0] = 52
+	fmt.Println(a)
+	fmt.Println(b)
+	// a: [0 0 0 42 100 11]
+	// b: [52 99 42]
+
 }
 
 func TestSliceSharedMemory(t *testing.T) {
@@ -59,25 +70,4 @@ func TestSliceSharedMemory(t *testing.T) {
 	fmt.Println("dir1 =>", string(dir1)) // prints: AAAAsuffix
 	fmt.Println("dir2 =>", string(dir2)) // prints: uffixBBBB
 	fmt.Println("dir3 =>", string(dir3)) // prints: AAAAsuffix
-}
-
-// ========== 深度比较 ==========
-
-func TestObjectDeepEqual(t *testing.T) {
-	// 在复制一个对象时，它可以是内建数据类型、数组、结构体、Map。
-	// 比如在复制结构体时，如果需要比较两个结构体中的数据是否相同，就要使用深度比较（使用反射 reflect.DeepEqual()）。
-	v1 := data{}
-	v2 := data{}
-	fmt.Println("v1 == v2:", reflect.DeepEqual(v1, v2))
-	//prints: v1 == v2: true
-
-	m1 := map[string]string{"one": "a", "two": "b"}
-	m2 := map[string]string{"two": "b", "one": "a"}
-	fmt.Println("m1 == m2:", reflect.DeepEqual(m1, m2))
-	// prints: m1 == m2: true
-
-	s1 := []int{1, 2, 3}
-	s2 := []int{1, 2, 3}
-	fmt.Println("s1 == s2:", reflect.DeepEqual(s1, s2))
-	// prints: s1 == s2: true
 }

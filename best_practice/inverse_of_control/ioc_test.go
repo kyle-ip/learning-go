@@ -1,4 +1,4 @@
-package ioc
+package inverse_of_control
 
 import "errors"
 

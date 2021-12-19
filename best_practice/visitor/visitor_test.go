@@ -8,9 +8,11 @@ import (
 )
 
 // Kubernetes 的 kubectl 命令中用到 Builder 和 Visitor 模式。
-// 其中 Visitor 模式是将算法与操作对象的结构分离的方法，能在不修改结构的情况下向现有对象结构添加新操作，是遵循开放 / 封闭原则的一种方法。
+// 其中 Visitor 模式是将算法与操作对象的结构分离的方法，不修改结构、向现有对象结构添加新操作，遵循开放封闭原则。
 
 type Visitor func(shape Shape)
+
+// Circle 和 Rectangle 都属于 Shape、都实现其 accept 方法。
 
 type Shape interface {
 	accept(Visitor)
@@ -25,7 +27,7 @@ func (c Circle) accept(v Visitor) {
 }
 
 type Rectangle struct {
-	Width, Heigh int
+	Width, Height int
 }
 
 func (r Rectangle) accept(v Visitor) {
@@ -51,17 +53,15 @@ func XmlVisitor(shape Shape) {
 }
 
 func TestVisitor(t *testing.T) {
-	// 这段代码的目的是解耦数据结构和算法：
+	// 解耦数据结构和算法：
 	// 虽然使用 Strategy 模式也可以完成而且会比较干净，
-	// 但是在有些情况下多个 Visitor 是来访问一个数据结构的不同部分，
-	// 此时数据结构比较像一个数据库，而各个 Visitor 会成为一个个小应用。
+	// 但是在有些情况下多个 Visitor 是来访问一个数据结构的不同部分。数据结构像一个数据库，而各个 Visitor 会成为一个个小应用。
 
 	// 对于不同的 Shape，可以调用不同的 Visitor，实现多种方式的序列化。
-	c := Circle{10}
-	r := Rectangle{100, 200}
-	shapes := []Shape{c, r}
-
-	for _, s := range shapes {
+	for _, s := range []Shape{
+		Circle{10},
+		Rectangle{100, 200},
+	} {
 		s.accept(JsonVisitor)
 		s.accept(XmlVisitor)
 	}
